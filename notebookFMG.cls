@@ -7,6 +7,7 @@
 
 %% ====================================================================
 
+
 %% Paquetes requeridos
 \RequirePackage[spanish]{babel}               % Para el español
 \RequirePackage[]{fancyhdr}                   % Para insertar headers y footers
@@ -14,6 +15,9 @@
 \RequirePackage[letterpaper]{geometry}        % Para modificar la geometría del libro
 \RequirePackage{ifthen}                       % Para tener condicionales
 \RequirePackage[utf8]{inputenc}               % Para tener formato utf8
+
+\RequirePackage{silence}
+% Disable all warnings issued by latex starting with "You have..." tex.stackexchange.com/questions/186967/you-have-requested-package-include-foo-but-the-package-provides-foo
 
 
 %% ====================================================================
@@ -86,9 +90,8 @@
 
 %% Cuerpo de la clase. La mayoría de las declaraciones aparecen aquí.
 
-
-
-
+\WarningFilter{latex}{You have requested package}
+\WarningFilter{fancyhdr}{\headheight is too small}
 
 
 \marginnotecommand{% Actualizar las configuraciones de la página dependiendo de que si se quieren notas al margen o no
@@ -197,11 +200,15 @@
     \fancyhf{}
     \renewcommand{\headrulewidth}{0pt}
 }
+\let\oldportada\portada
+\renewcommand{\portada}{\rc{\oldportada}}
 
 \newcommand{\indice}{% Comando para iniciar el índice
     \setpagemargincm{\firstpagemarginleft}{\pagemargintop}{\firstpagemarginright}{\pagemarginbottom}
     \tableofcontents
 }
+\let\oldindice\indice
+\renewcommand{\indice}{\rc{\oldindice}}
 
 \newcommand{\contenidoconfig}{% Comando para iniciar las configuraciones iniciales del contenido
     % Setea los márgenes de la página
@@ -225,6 +232,7 @@
 % 	#1	Párrafo
 \newcommand{\newparnl}[1]{\rc{#1 \par}}
 
+\resumencommand{
 \let\oldpart\part
 \let\oldchapter\chapter
 \let\oldsection\section
@@ -240,3 +248,4 @@
 \renewcommand{\subsubsection}[1]{\rc{\oldsubsubsection{#1}}}
 \renewcommand{\paragraph}[1]{\rc{\oldparagraph{#1}}}
 \renewcommand{\subparagraph}[1]{\rc{\oldsubparagraph{#1}}}
+}{}

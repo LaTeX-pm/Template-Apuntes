@@ -6,13 +6,15 @@
 \usepackage{lipsum} % Para meter texto de relleno
 \usepackage[Lenny]{fncychap} % Paquete para hacer los encabezados de los capítulos más bonitos. Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
 
-\usepackage{silence}
-% Disable all warnings issued by latex starting with "You have..." tex.stackexchange.com/questions/186967/you-have-requested-package-include-foo-but-the-package-provides-foo
-\WarningFilter{latex}{You have requested package}
+% \usepackage{silence}
+% % Disable all warnings issued by latex starting with "You have..." tex.stackexchange.com/questions/186967/you-have-requested-package-include-foo-but-the-package-provides-foo
+% \WarningFilter{latex}{You have requested package}
+
 
 \usepackage[color]{pkg/theoremenvFMG} % Carga los entornos de los teoremas. Tiene la opción de mostrar colores en el nombre del teorema, si es que se le entrega la opción de "color".
 \usepackage[showmn]{pkg/marginnotesFMG} % Paquetes para hacer notas al margen. Se pueden desactivar todas las notas quitando la opción "showmn"
-\usepackage[]{pkg/todonotesFMG} % Paquete para dejar queaceres a hacer en el futuro
+\usepackage[]{pkg/todonotesFMG} % Paquete para dejar quehaceres a hacer en el futuro
+
 
 
 % \usepackage[]{}
@@ -45,7 +47,7 @@
 % Creación de la tabla de contenidos
 \indice
 
-\listoftodos
+\rc{\listoftodos}
 
 % Configuraciones para el contenido
 \contenidoconfig
