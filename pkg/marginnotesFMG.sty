@@ -1,0 +1,47 @@
+%% Base del template: overleaf.com/learn/latex/Writing_your_own_package
+%% Para saber más: overleaf.com/learn/latex/margin_notes
+
+%% Identificación
+%% El paquete se identifica a sí mismo y se define la versión de LaTeX necesitada
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{marginnotesFMG}[2020/08/31 Paquete que maneja las notas al margen.]
+
+%% ====================================================================
+
+%% Paquetes requeridos y definiciones preliminares, necesarias para las opciones
+\RequirePackage{ifthen}                    % Para tener condicionales
+\RequirePackage[]{marginnote}              % Para tener más variedad a la hora de escribir las notas al margen. Este paquete actualmente se encuentra bastante malo.
+
+\def\showmnoption {false}             % Para controlar la opción de mostrar las notas al marge proporcionadas por este paquete o no.
+
+%% ====================================================================
+
+%% En esta parte se manejan las opciones pasadas al paquete
+\DeclareOption{showmn}{% Opción para activar las notas al margen
+    \ifthenelse{\equal{\marginnoteoption}{true}}{
+        \def\showmnoption {true}
+    }{}
+}
+
+% Si se le entrega otra opción, que retorne una advertencia.
+\DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+\ProcessOptions\relax
+
+%% ====================================================================
+
+%% Cuerpo del paquete, la mayor parte de las declaraciones aparecen aquí.
+
+\newcommand{\showmncommand}[2]{% comando para elegir si activar las notas al margen o no
+    \ifthenelse{\equal{\showmnoption}{true}}{#1}{#2}
+}
+\newcommand{\MarginNote}[1]{% Genera una nota al margen si es que la opción shownm está activada
+    \showmncommand{\marginpar{#1}}{}
+}
+
+% \namethm[texto nota al margen]{texto en negrita y con paréntesis}: Ocupado para los nombres de los teoremas. Si es que en el argumento de los paréntesis cuadrado no se entrega nada, automáticamente tomará el argumento con las llaves para la nota al margen.
+\def\estilonamethm {\rmfamily\bfseries\upshape} % Define el estilo del contenido de \namethm
+\newcommand{\namethm}[2][]{\ifthenelse{\equal{#1}{}}{{\estilonamethm (#2)}\MarginNote{#2}}{{\estilonamethm (#2)}\MarginNote{#1}}}
+
+% \emphname[texto nota al margen]{texto en itálica}: Ocupado para enfatizar el nombre a la hora de definir algún objeto. Si es que en el argumento de los paréntesis cuadrado no se entrega nada, automáticamente tomará el argumento con las llaves para la nota al margen.
+\def\estiloemphname {\rmfamily\itshape\bfseries} % Define el estilo del contenido de \emphname
+\newcommand{\emphname}[2][]{\ifthenelse{\equal{#1}{}}{{\estiloemphname #2}\MarginNote{#2}}{{\estiloemphname #2}\MarginNote{#1}}}

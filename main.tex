@@ -1,0 +1,50 @@
+% Tiene dos configuraciones extras: "twoside", para diferenciar las páginas pares de las impares, y "marginnote", para poder activar las notas al margen. También, por parte del paquete todonotes, si se escribe "final" se desactivan los TODO's
+\documentclass[marginnote]{notebookFMG}
+
+% ========================= Paquetes =========================
+
+\usepackage{lipsum} % Para meter texto de relleno
+\usepackage[Lenny]{fncychap} % Paquete para hacer los encabezados de los capítulos más bonitos. Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+
+\usepackage{silence}
+% Disable all warnings issued by latex starting with "You have..." tex.stackexchange.com/questions/186967/you-have-requested-package-include-foo-but-the-package-provides-foo
+\WarningFilter{latex}{You have requested package}
+
+\usepackage[color]{pkg/theoremenvFMG} % Carga los entornos de los teoremas. Tiene la opción de mostrar colores en el nombre del teorema, si es que se le entrega la opción de "color".
+\usepackage[color]{pkg/marginnotesFMG} % Paquetes para hacer notas al margen. Se pueden desactivar todas las notas quitando la opción "showmn"
+\usepackage[]{pkg/todonotesFMG}
+
+%% Datos de la portada
+\def\tituloportada {Nuevo Titulo de la Portada}
+\def\autordeldocumento {Francisco Muñoz Guajardo}
+\def\repositorio {github.com/LaTeX-pm/Template-Apuntes}
+\def\fecha {\today}
+\def\nombredelcurso {Curso ultra bkn}
+\def\codigodelcurso {CO-1234}
+\def\nombreuniversidad {Universidad de Chile}
+\def\nombrefacultad {Facultad de Ciencias Físicas y Matemáticas}
+\def\departamentouniversidad {Departamento de la Universidad}
+
+% Si se desea cambiar la tabla de la portada
+\renewcommand{\tablaautor}{
+    \begin{tabular}{ll}
+        Autor: & \autordeldocumento \\
+        Repositorio: & \repositorio \\
+        Fecha: & \fecha \\
+    \end{tabular}
+}
+
+\begin{document}
+% Creación de la portada
+\portada
+
+% Creación de la tabla de contenidos
+\indice
+
+\listoftodos
+
+% Configuraciones para el contenido
+\contenidoconfig
+
+\input{example}
+\end{document}
