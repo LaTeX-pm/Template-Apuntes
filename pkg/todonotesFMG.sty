@@ -33,19 +33,4 @@
 %     \ifthenelse{\equal{\showtodooption}{true}}{#1}{#2}
 % }
 
-\newcommand{\FMG}[2][]{
-    \marginnotecommand{
-        \ifthenelse{\equal{#1}{}}{
-            \todo[tickmarkheight=0.1cm,color=blue!50]{#2}
-        }{
-            \todo[caption={#1},tickmarkheight=0.1cm,color=blue!50]{#2}
-        }
-    }{
-        \ifthenelse{\equal{#1}{}}{
-            \todo[tickmarkheight=0.1cm,color=blue!50,inline]{#2}
-        }{
-            \todo[caption={#1},tickmarkheight=0.1cm,color=blue!50,inline]{#2}
-        }
-    }
-    
-}
+\newcommand{\FMG}[2][]{\marginnotecommand{\ifthenelse{\equal{#1}{}}{\todo[tickmarkheight=0.1cm,color=blue!50]{#2}}{\todo[caption={#1},tickmarkheight=0.1cm,color=blue!50]{#2}}}{\ifthenelse{\equal{#1}{}}{\todo[tickmarkheight=0.1cm,color=blue!50,inline]{#2}}{\todo[caption={#1},tickmarkheight=0.1cm,color=blue!50,inline]{#2}}}}

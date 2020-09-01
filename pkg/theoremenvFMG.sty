@@ -39,7 +39,12 @@
 
 % plain: Titulo en negrita, cuerpo en itálica. Usualmente utilizado en teoremas, lemas, corolarios, proposiciones y conjeturas.
 \theoremstyle{plain}
-\newtheorem{theorem}{\colorb{Teorema}}[chapter]
+\resumencommand{
+    \newtheorem{theorem}{\colorb{Teorema}}
+}{
+    \newtheorem{theorem}{\colorb{Teorema}}[chapter]
+}
+
 \newtheorem{lemma}[theorem]{\colorb{Lema}}
 \newtheorem{corollary}[theorem]{\colorb{Corolario}}
 \newtheorem{proposition}[theorem]{\colorb{Proposición}}

@@ -22,6 +22,7 @@
 % Configuraciones generales para las opciones de la clase
 \def\marginnoteoption {false}      % Opción para activar las notas al margen
 \def\twosideoption {false}         % Opción para activar los dos lados del libro
+\def\resumenoption {false}         % Opción para activar la opción de resumen
 
 % Definiciones de la portada
 \def\tituloportada {Titulo de la Portada}
@@ -54,24 +55,41 @@
 \DeclareOption{marginnote}{% Opción de la nota al margen
     \def\marginnoteoption {true}
 }
+% Comando para utilizar las notas al margen, si es que está activada la opción
+\newcommand{\marginnotecommand}[2]{\ifthenelse{\equal{\marginnoteoption}{true}}{#1}{#2}}
 
 \DeclareOption{twoside}{% Opción de twoside
     \def\twosideoption {true}
 }
+% Comando para utilizar twoside, si es que está activada la opción
+\newcommand{\twosidecommand}[2]{\ifthenelse{\equal{\twosideoption}{true}}{#1}{#2}}
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}} % Pasar el resto de los argumentos a la clase de documento original. Cosas que sinceramente no entiendo.
+\DeclareOption{resumen}{% Opción para activar el resumen
+    \def\resumenoption {true}
+}
+% Comando para utilizar resumen, si es que está activada la opción
+\newcommand{\resumencommand}[2]{\ifthenelse{\equal{\resumenoption}{true}}{#1}{#2}}
+
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}} % Pasar el resto de los argumentos a la clase de documento original. Cosas que sinceramente no entiendo.
 \ProcessOptions\relax
 
-\LoadClass[]{book}
+% Si se escoje la opción de resumen, hacer doble columna. En caso contrario, no hacerlo.
+\resumencommand{
+    \LoadClass[twocolumn]{book}
+    \def\marginnoteoption {false}
+}{
+    \LoadClass[]{book}
+}
+
 
 %% ====================================================================
 
 %% Cuerpo de la clase. La mayoría de las declaraciones aparecen aquí.
-% Comando para utilizar las notas al margen, si es que está activada la opción
-\newcommand{\marginnotecommand}[2]{\ifthenelse{\equal{\marginnoteoption}{true}}{#1}{#2}}
 
-% Comando para utilizar twoside, si es que está activada la opción
-\newcommand{\twosidecommand}[2]{\ifthenelse{\equal{\twosideoption}{true}}{#1}{#2}}
+
+
+
+
 
 \marginnotecommand{% Actualizar las configuraciones de la página dependiendo de que si se quieren notas al margen o no
     \def\pagemarginleft {2.0}
@@ -193,3 +211,32 @@
     \mainmatter % Enumerar con números
 }
 
+% Diminutivo del comando resumen
+\newcommand{\rc}[1]{\resumencommand{}{#1}}
+
+% Insertar párrafo
+\newcommand{\newp}{\rc{\hbadness=10000 \vspace{\baselineskip} \par}}
+
+% Insertar párrafo
+% 	#1	Párrafo
+\newcommand{\newpar}[1]{\rc{\hbadness=10000 #1 \newp}}
+
+% Insertar párrafo sin nueva línea al final
+% 	#1	Párrafo
+\newcommand{\newparnl}[1]{\rc{#1 \par}}
+
+\let\oldpart\part
+\let\oldchapter\chapter
+\let\oldsection\section
+\let\oldsubsection\subsection
+\let\oldsubsubsection\subsubsection
+\let\oldparagraph\paragraph
+\let\oldsubparagraph\subparagraph
+
+\renewcommand{\part}[1]{\rc{\oldpart{#1}}}
+\renewcommand{\chapter}[1]{\rc{\oldchapter{#1}}}
+\renewcommand{\section}[1]{\rc{\oldsection{#1}}}
+\renewcommand{\subsection}[1]{\rc{\oldsubsection{#1}}}
+\renewcommand{\subsubsection}[1]{\rc{\oldsubsubsection{#1}}}
+\renewcommand{\paragraph}[1]{\rc{\oldparagraph{#1}}}
+\renewcommand{\subparagraph}[1]{\rc{\oldsubparagraph{#1}}}
